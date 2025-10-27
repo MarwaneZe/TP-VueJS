@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Manipulation de vue</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+    p {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div id="monapp">
+    <span>couleur de la police : </span>
+    <br></br>
+  <label><input type="radio" value="red" v-model="couleur"> Rouge</label><br>
+  <label><input type="radio" value="blue" v-model="couleur"> Bleu</label><br>
+  <label><input type="checkbox"  v-model="bachtban"> afficher / cacher le paragraphe</label><br>
+    
+    <p v-if="bachtban":style="{ color: couleur }">Bonjour, je suis un paragraphe</p>
+    
+</div>
+
+
+<script>
+	const appli = {
+		data () {
+				return {
+                    couleur:"" ,
+                    bachtban:false
+                    
+					
+				}
+			}
+	};
+	
+Vue.createApp(appli).mount("#monapp");
+</script>
+
+</body>
+</html>

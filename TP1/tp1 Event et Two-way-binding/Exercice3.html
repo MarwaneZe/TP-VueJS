@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Exercice 3 - Champ sans espace</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    input {
+      padding: 5px;
+      font-size: 16px;
+    }
+    p {
+      color: red;
+      display: none;
+    }
+    p.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="monapp">
+    <label for="texte">Saisissez un mot sans espace :</label><br>
+    <input id="texte" v-model="chaine" @input="verifierEspace" placeholder="Tapez ici..." />
+
+    <p :class="{ visible: afficherMessage }">⚠️ Veuillez ne pas utiliser d’espace !</p>
+  </div>
+
+  <script>
+    const appli = {
+      data() {
+        return {
+          chaine: "",             
+          afficherMessage: false  
+        }
+      },
+      methods: {
+        verifierEspace() {
+          if (this.chaine.includes(" ")) {
+            this.afficherMessage = true;  
+          } else {
+            this.afficherMessage = false; 
+          }
+        }
+      }
+    }
+
+    Vue.createApp(appli).mount("#monapp");
+  </script>
+
+</body>
+</html>
