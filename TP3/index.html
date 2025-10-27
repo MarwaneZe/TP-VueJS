@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+    <title>TP3</title>
+</head>
+<body>
+    <div id="app">
+      <div class="container">
+        <aside class="sidebar">
+          <input type="text" placeholder="Recherche..." v-model="searchQuery">
+          <div class="filters">
+            <h4>Catégorie</h4>
+            
+            <select v-model="selectedCategorie">
+              <option value="All">Toutes les catégories</option>
+              <option v-for="cat in categories" :value="cat" :key="cat">{{cat}}</option>
+            </select>
+            
+            <h4>Disponibilité</h4>
+            
+            <select v-model="selectedDispo">
+              <option value="All">All</option>
+              <option value="disponible">En stock</option>
+              <option value="rupture">Rupture de Stock</option>
+            
+            </select>
+
+            <h4>Trier par prix</h4>
+            
+            <select v-model="selectedSort">
+              <option value="none">Aucun</option>
+              <option value="asc">Prix croissant</option>
+              <option value="desc">Prix décroissant</option>
+            </select>
+
+          </div>
+        </aside>
+        
+
+        <div class="main">
+          <div class="product-card" v-for="product in filteredProducts">
+            <img :src="product.image" >
+            <h4>{{product.nom}}</h4>
+            <p class="category">{{product.categorie}}</p>
+            <p class="stock" :class="{ disponible: product.disponible, rupture: !product.disponible }">
+              {{ product.disponible ? "En stock" : "Rupture de stock" }}
+            </p>
+            <div>
+              <span>{{product.prix}}DH</span>
+              <button @click="ajouterAuPanier(product)" :disabled="!product.disponible">+</button>
+            </div>
+          
+          </div>
+        </div>
+        <aside class="cart">
+          <h3>Panier</h3>
+        <div v-if="panier.length === 0">Votre panier est vide</div>
+          <ul>
+            <li v-for="item in panier" :key="item.id">
+              {{ item.nom }} x {{ item.quantite }} - {{ item.prix * item.quantite }}DH
+            </li>
+          </ul>
+          <div v-if="panier.length > 0">
+            <strong>Total: {{ totalPanier }} DH</strong>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
